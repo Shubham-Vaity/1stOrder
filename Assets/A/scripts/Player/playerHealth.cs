@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerHealth : MonoBehaviour,I_playerInterface 
+public class playerHealth : MonoBehaviour,IDamage ,Iheal
 {
 
     public float HP;
@@ -13,24 +13,24 @@ public class playerHealth : MonoBehaviour,I_playerInterface
     }
 
 
-    public void Heal(int healing)
-    {
-        HP += healing;
-        if(HP > MaxHP)
-        { 
-            HP = MaxHP; 
-        }
-    }
 
-    public void takeDamage(float damage)
+    public void applyDamage(float damage)
     {
-     HP-= damage;
+        HP -= damage;
 
-        if (HP <= 0) 
+        if (HP <= 0)
         {
             Dead();
         }
+    }
 
+    public void Heal(int healing)
+    {
+        HP += healing;
+        if (HP > MaxHP)
+        {
+            HP = MaxHP;
+        }
     }
 
 
@@ -41,6 +41,5 @@ public class playerHealth : MonoBehaviour,I_playerInterface
 
     }
 
-
-
+  
 }

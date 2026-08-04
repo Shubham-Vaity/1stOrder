@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,47 +7,62 @@ public class EnemyAttack : MonoBehaviour
 
 
     private GameObject attackPoint;
-    public float attackRadious = 1;
-    public float attackDistance = 1;
-    private bool attacking;
+     private bool attacking;
+
+    public EnemyMovement movement;
 
 
-    private float damage=5;
+
+    [SerializeField] private SDamageData damageData;
 
 
-    void Start()
+
+    private void Awake()
     {
+        movement = GetComponent<EnemyMovement>();   
+            
         attackPoint = transform.Find("attackPoint").gameObject;
+    }
     
-    
+
+
+    private void OnEnable()         ////is this how it works ??  I tried looking it up 
+    {
+        movement.AttackPlayer += startAttackCorutin;
+    }
+    private void OnDisable()
+    {
+        movement.AttackPlayer -= startAttackCorutin;
     }
 
 
-
-    public void startattackCorutin()
+    private void startAttackCorutin()
     {
         if (!attacking)
         {
-            //Debug.Log("attacking player ");
+          
             StartCoroutine(attackDelay(1f));
         }
     }
 
 
 
+  
+
+
     void attackPlayer()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, attackRadious, attackPoint.transform.up, attackDistance, LayerMask.GetMask("Player"));
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, damageData.attackRadious, attackPoint.transform.up, damageData.attackDistance, LayerMask.GetMask("Player"));
         if (hit.collider != null)
         {
-            Debug.Log("player hit");
+           
 
-            I_playerInterface playerInterface = hit.collider.GetComponent<I_playerInterface>();
+            IDamage idamage = hit.collider.GetComponent<IDamage>();
 
-            if (playerInterface != null)
+            if (idamage != null)
             {
-                playerInterface.takeDamage(damage);
-                playerInterface = null;  ///idk if this is right or wrong
+                idamage.applyDamage(damageData.amount);
+                
             }
 
         }
@@ -60,10 +76,12 @@ public class EnemyAttack : MonoBehaviour
     IEnumerator attackDelay(float delayInSeconds)
     {
         attacking = true;
+        movement.isattacking = attacking;
         attackPlayer();
 
         yield return new WaitForSeconds(delayInSeconds);
 
         attacking = false;
+        movement.isattacking = attacking;
     }
 }

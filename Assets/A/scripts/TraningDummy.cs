@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class TraningDummy : MonoBehaviour,I_Interact
+public class TraningDummy : MonoBehaviour, IDamage
 {
-    public void interact(E_Player_Wepon wepon, float damage)
+    public void applyDamage(float damage)
     {
         Debug.Log("Damage deald "+damage);
     }

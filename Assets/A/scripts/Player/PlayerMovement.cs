@@ -4,7 +4,7 @@ using UnityEngine.Windows;
 public class PlayerMovement : MonoBehaviour
 {
 
-    private Player_input player_Input;
+    private PlayerInput player_Input;
 
     private Vector3 input;
 
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //getting script 
-        player_Input= GetComponent<Player_input>();
+        player_Input= GetComponent<PlayerInput>();
 
         //getting the child 
         body= transform.Find("body").gameObject; //just a simple arrow sprite to see which direction is player facing
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     
-    void FixedUpdate() // sicnce its ligter then update and works mostly the same 
+    void Update() 
     {
 
         sprint();

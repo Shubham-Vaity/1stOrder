@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum E_Player_Wepon
+public enum EPlayerWeaponType
 {
     Sword,
     Axe,

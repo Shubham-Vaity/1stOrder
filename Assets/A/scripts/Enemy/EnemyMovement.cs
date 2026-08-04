@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,12 +14,20 @@ public class EnemyMovement : MonoBehaviour
     public float StopingDistance=1;
     
     public GameObject player;
-    private EnemyAttack enemyAttack;
+    
+    private Rigidbody2D rb;
 
+    
+
+    public event Action AttackPlayer;
+    public bool isattacking;
+
+    
 
     private void Start()
     {
-        enemyAttack = GetComponent<EnemyAttack>();
+     
+        rb= GetComponent<Rigidbody2D>();    
     }
 
 
@@ -35,15 +44,21 @@ public class EnemyMovement : MonoBehaviour
             if (Vector2.Distance(transform.position,player.transform.position)> StopingDistance)
             {
 
-            transform.position = Vector2.MoveTowards(transform.position,player.transform.position,Speed*Time.deltaTime);
+                  transform.position = Vector2.MoveTowards(transform.position,player.transform.position,Speed*Time.deltaTime);
+ 
+            //    rb.MovePosition(new Vector2(player.transform.position.x, player.transform.position.y));  //instantly tps close to player insted of moving slowly
+
 
             }
-            else if(Vector2.Distance(transform.position, player.transform.position) <= StopingDistance)
+            else 
             {
-                if (enemyAttack)
+                if (!isattacking)
                 {
 
-                    enemyAttack.startattackCorutin();             //i beleve insted of doing all this we do the anouncing things 
+                    //  enemyAttack.startattackCorutin();             //i beleve insted of doing all this we do the anouncing things 
+
+                    AttackPlayer?.Invoke();
+                    Debug.Log("attacking player ");
                 }
 
             }

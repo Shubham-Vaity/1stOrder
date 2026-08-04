@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 53141191}
   - component: {fileID: 53141190}
   - component: {fileID: 53141192}
+  - component: {fileID: 53141193}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -267,8 +268,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   currentwepon: 0
-  attackRadious: 1
-  attackDistance: 1
+  damageData:
+    amount: 5
+    knockbackForce: 1
+    attackRadious: 1.5
+    attackDistance: 1
+    direction: {x: 0, y: 0}
+--- !u!114 &53141193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53141185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64e9ed20768dd345ae514be7dd2f5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerHealth
+  HP: 0
+  MaxHP: 20
 --- !u!1 &137017471
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: 1
+  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
 --- !u!1 &519420028
@@ -923,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: 2
+  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
 --- !u!50 &706017364
@@ -1105,7 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: 1
+  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
 --- !u!50 &1132221165
@@ -1798,8 +1817,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23db6422aed8e254fb18222161ee82fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  attackRadious: 1
-  attackDistance: 1
+  damageData:
+    amount: 5
+    knockbackForce: 0.5
+    attackRadious: 1
+    attackDistance: 1
+    direction: {x: 0, y: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
