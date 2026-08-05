@@ -10,54 +10,61 @@ public class EnemyMovement : MonoBehaviour
 
 
 
-    public float Speed=1;
+    public float speed=1;
     public float StopingDistance=1;
     
     public GameObject player;
-    
+    public event Action AttackPlayer;
     private Rigidbody2D rb;
 
-    
 
-    public event Action AttackPlayer;
     public bool isattacking;
 
-    
 
-    private void Start()
+
+    private Vector2 direction;
+
+
+    private void Awake()
     {
-     
-        rb= GetComponent<Rigidbody2D>();    
+        rb = GetComponent<Rigidbody2D>();
     }
 
 
 
 
-
-    void Update()
+    void FixedUpdate()
     {
-        if (player != null) {
+        enemymove();
+        
+    }
+
+
+    void enemymove()
+    {
+        if (player != null)
+        {
 
             lookAtplayer();
 
 
-            if (Vector2.Distance(transform.position,player.transform.position)> StopingDistance)
+            if (Vector2.Distance(transform.position, player.transform.position) > StopingDistance)
             {
+                //  transform.position = Vector2.MoveTowards(transform.position,player.transform.position,Speed*Time.deltaTime);
 
-                  transform.position = Vector2.MoveTowards(transform.position,player.transform.position,Speed*Time.deltaTime);
- 
-            //    rb.MovePosition(new Vector2(player.transform.position.x, player.transform.position.y));  //instantly tps close to player insted of moving slowly
+
+                direction = ((Vector2)player.transform.position - rb.position).normalized;
+                rb.linearVelocity = direction * speed;
 
 
             }
-            else 
+            else
             {
+                rb.linearVelocity = Vector2.zero;
                 if (!isattacking)
                 {
 
-                    //  enemyAttack.startattackCorutin();             //i beleve insted of doing all this we do the anouncing things 
-
-                    AttackPlayer?.Invoke();
+                    AttackPlayer?.Invoke();    //if not this method how do u recomend me attack player ?? uisng another collider that's not goood..
                     Debug.Log("attacking player ");
                 }
 
@@ -66,7 +73,6 @@ public class EnemyMovement : MonoBehaviour
 
 
         }
-        
     }
 
 
@@ -115,7 +121,7 @@ public class EnemyMovement : MonoBehaviour
         {
             Debug.Log("Player in range");
             player= collision.gameObject;
-            Speed = 2; 
+            speed = 2; 
 
         }
     }
@@ -125,7 +131,7 @@ public class EnemyMovement : MonoBehaviour
         {
             Debug.Log("Player not in range");
             player = null;
-            Speed = 0;
+            speed = 0;
         }
     }
 

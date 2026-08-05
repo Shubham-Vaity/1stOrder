@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 2
+  body: {fileID: 0}
 --- !u!114 &53141192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,12 +268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739b00b7a1a20ea4e8b5f374c7edba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  body: {fileID: 1880469212}
+  attackPoint: {fileID: 137017471}
+  attackRadious: 1
+  attackDistance: 1
   currentwepon: 0
   damageData:
     amount: 5
     knockbackForce: 1
-    attackRadious: 1.5
-    attackDistance: 1
     direction: {x: 0, y: 0}
 --- !u!114 &53141193
 MonoBehaviour:
@@ -286,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64e9ed20768dd345ae514be7dd2f5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerHealth
-  HP: 0
   MaxHP: 20
 --- !u!1 &137017471
 GameObject:
@@ -1788,9 +1790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf4ed270e1972f4aa98651c94204c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  Speed: 1
+  speed: 1
   StopingDistance: 1.5
   player: {fileID: 0}
+  isattacking: 0
 --- !u!114 &2020011920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,7 +1807,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   MaxHP: 30
-  HP: 0
 --- !u!114 &2020011921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1817,11 +1819,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23db6422aed8e254fb18222161ee82fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  attackPoint: {fileID: 0}
+  movement: {fileID: 0}
+  attackRadious: 1
+  attackDistance: 1
   damageData:
     amount: 5
     knockbackForce: 0.5
-    attackRadious: 1
-    attackDistance: 1
     direction: {x: 0, y: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -7,12 +7,18 @@ public class PlayerAttack : MonoBehaviour
 
     private PlayerInput player_Input;
 
-    private GameObject body;
-    private GameObject attackPoint;
+    [SerializeField] private GameObject body;
+    [SerializeField] private GameObject attackPoint;
 
     private bool canattack;
 
+
+    public float attackRadious=1;    
+    public float attackDistance = 1;
+    private Vector2 direction;
+
     public EPlayerWeaponType currentwepon;
+
 
 
 
@@ -20,15 +26,29 @@ public class PlayerAttack : MonoBehaviour
 
 
 
-    void Start()
+    private void Awake()
     {
-
-        //getting script 
         player_Input = GetComponent<PlayerInput>();
 
         //getting the child 
+        if (!body )
+        {
         body = transform.Find("body").gameObject;
+                    }
+
+        if (!attackPoint)
+        {
         attackPoint = body.transform.Find("attack").gameObject; //just a simple arrow sprite to see which direction is player facing
+
+        }
+
+    }
+
+
+    void Start()
+    {
+
+       
 
         attackPoint.SetActive(false);
 
@@ -37,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
         currentwepon = EPlayerWeaponType.Sword;
 
-
+        
 
     }
 
@@ -82,18 +102,22 @@ public class PlayerAttack : MonoBehaviour
     {
       //  Debug.DrawRay(body.transform.position, body.transform.up, Color.red);
       
-        RaycastHit2D hit = Physics2D.CircleCast(body.transform.position, damageData.attackRadious, attackPoint.transform.up, damageData.attackDistance, LayerMask.GetMask("Interactable"));//to ignore player itself
+        RaycastHit2D hit = Physics2D.CircleCast(body.transform.position, attackRadious, attackPoint.transform.up, attackDistance, LayerMask.GetMask("Interactable"));//to ignore player itself
 
         if (hit.collider != null)
         {
 
             Debug.Log("hit" + hit.collider.name);
 
-            IDamage idamage = hit.collider.GetComponent<IDamage>();
+            IDamageable idamage = hit.collider.GetComponent<IDamageable>();
 
             if (idamage != null)
             {
-                idamage.applyDamage(damageData.amount);
+
+                direction = (hit.transform.position - transform.position).normalized;
+                damageData.direction = direction;
+
+                idamage.TakeDamage(damageData);
                 
             }
         }
@@ -107,18 +131,30 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentwepon = EPlayerWeaponType.Sword;
+            damageData.amount = 5;
+            damageData.knockbackForce = 2;  
+          
+            
 
             Debug.Log(currentwepon);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentwepon = EPlayerWeaponType.Axe;
+            damageData.amount = 6;
+            damageData.knockbackForce = 1f; 
+          
+
 
             Debug.Log(currentwepon);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentwepon = EPlayerWeaponType.PicAxe;
+            damageData.amount = 3;
+            damageData.knockbackForce = 1.5f;
+          
+
 
             Debug.Log(currentwepon);
         }

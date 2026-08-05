@@ -6,22 +6,33 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerInput player_Input;
 
-    private Vector3 input;
+    private Vector2 input;
 
     public float speed;
     private float Current_speed;
     private float Sprint_speed;
 
-    private GameObject body;
+   [SerializeField] private GameObject body;
+    private Rigidbody2D rb;
 
-    void Start()
+
+    private void Awake()
     {
-
         //getting script 
         player_Input= GetComponent<PlayerInput>();
 
         //getting the child 
+        if (!body)
+        {
         body= transform.Find("body").gameObject; //just a simple arrow sprite to see which direction is player facing
+        }
+
+        rb = GetComponent<Rigidbody2D>();
+        
+    }
+
+    void Start()
+    {
 
 
         //setting veluse
@@ -31,15 +42,22 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    
-    void Update() 
+
+
+    private void Update()
+    {
+        sprint();
+        RotatePlayer();
+        
+    }
+
+
+    void FixedUpdate() 
     {
 
-        sprint();
 
         move();
     
-        RotatePlayer();
 
     }
 
@@ -63,15 +81,16 @@ public class PlayerMovement : MonoBehaviour
     private void move()
     {
         //movement
-        input = new Vector3(player_Input.horizontalValue(), player_Input.verticalValue(), 0);
-        transform.Translate(input.normalized * Current_speed * Time.deltaTime);
+        input = new Vector2(player_Input.horizontalValue(), player_Input.verticalValue()).normalized;
+        //transform.Translate(input.normalized * Current_speed * Time.deltaTime);
+        rb.MovePosition(rb.position + input * Current_speed * Time.fixedDeltaTime);
 
     }
 
     private void RotatePlayer()
     {
         //rotation // might be the part for animation script 
-        if (input != Vector3.zero)
+        if (input != Vector2.zero)
         {
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
             {

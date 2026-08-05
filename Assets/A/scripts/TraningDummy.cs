@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class TraningDummy : MonoBehaviour, IDamage
+public class TraningDummy : MonoBehaviour, IDamageable
 {
-    public void applyDamage(float damage)
+    public void TakeDamage(SDamageData damage)
     {
-        Debug.Log("Damage deald "+damage);
+        Debug.Log("Damage deald "+damage.amount);
     }
 
 }

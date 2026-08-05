@@ -1,24 +1,24 @@
 using UnityEngine;
 
-public class playerHealth : MonoBehaviour,IDamage ,Iheal
+public class playerHealth : MonoBehaviour,IDamageable ,Iheal
 {
 
-    public float HP;
-    public float MaxHP=20;
+    [SerializeField] private float MaxHP=20;
+     private float currentHP;
 
    
     void Start()
     {
-        HP = MaxHP;  //thiss will be set in save game i beleve   
+        currentHP = MaxHP;  //thiss will be set in save game i beleve   
     }
 
 
 
-    public void applyDamage(float damage)
+    public void TakeDamage(SDamageData damage)
     {
-        HP -= damage;
+        currentHP -= damage.amount;
 
-        if (HP <= 0)
+        if (currentHP <= 0)
         {
             Dead();
         }
@@ -26,10 +26,10 @@ public class playerHealth : MonoBehaviour,IDamage ,Iheal
 
     public void Heal(int healing)
     {
-        HP += healing;
-        if (HP > MaxHP)
+        currentHP += healing;
+        if (currentHP > MaxHP)
         {
-            HP = MaxHP;
+            currentHP = MaxHP;
         }
     }
 

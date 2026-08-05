@@ -1,54 +1,51 @@
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour, IDamage
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
-  
 
-public float MaxHP = 10;
-    public float HP;
+
+    [SerializeField] private float MaxHP = 10;
+     private float currentHP;
 
  
     private Rigidbody2D rb;
-    private EnemyMovement enemyMovement;
 
 
     private void Awake()
     {
         
-        enemyMovement= GetComponent<EnemyMovement>();   
+       rb = GetComponent<Rigidbody2D>();
     }
-
 
     void Start()
     {
-        HP = MaxHP;
-     //   rb = GetComponent<Rigidbody2D>();
+        currentHP = MaxHP;
     }
 
 
 
-    public void applyDamage(float damage)
+    public void TakeDamage(SDamageData damage)
     {
 
-        takeDamage(damage);
+        takeDamage(damage.amount);
+
+        rb.AddForce( damage.direction * damage.knockbackForce,ForceMode2D.Impulse);
     }
 
   
 
 
-    void takeDamage(float damage) //enemy has 2 colliders 1 with on trigger on with a large radious  and the other with small radious
+    void takeDamage(float damage) 
     {
 
-        if (enemyMovement.player != null)
-        {
-        HP -= damage;
-        float forceMagnitude = 1f;
+        currentHP -= damage;
 
-          //  rb.AddForce((transform.position - enemyMovement.player.transform.position).normalized * forceMagnitude, ForceMode2D.Impulse);// causing a problem where the enemy stops moving entirly or moves in an oposit direction and does not stops moving  and continues
-            if (HP <= 0)
+          
+          
+            if (currentHP <= 0)
             {
                 this.gameObject.SetActive(false);  //will eiter set active again in event manager after a set time 
             }
-        }
+        
     }
 }

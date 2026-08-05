@@ -6,12 +6,16 @@ public class EnemyAttack : MonoBehaviour
 {
 
 
-    private GameObject attackPoint;
+    [SerializeField] private GameObject attackPoint;
      private bool attacking;
 
     public EnemyMovement movement;
 
 
+    public float attackRadious=1;    
+    public float attackDistance=1;
+
+    private Vector2 direction;
 
     [SerializeField] private SDamageData damageData;
 
@@ -19,11 +23,22 @@ public class EnemyAttack : MonoBehaviour
 
     private void Awake()
     {
-        movement = GetComponent<EnemyMovement>();   
-            
+        movement = GetComponent<EnemyMovement>();
+        if (!attackPoint)
+        {
+
         attackPoint = transform.Find("attackPoint").gameObject;
+        }
+
+            
     }
-    
+
+    private void Start()
+    {
+        damageData.amount = 5f;
+        damageData.knockbackForce = 1f;
+    }
+
 
 
     private void OnEnable()         ////is this how it works ??  I tried looking it up 
@@ -52,16 +67,19 @@ public class EnemyAttack : MonoBehaviour
 
     void attackPlayer()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, damageData.attackRadious, attackPoint.transform.up, damageData.attackDistance, LayerMask.GetMask("Player"));
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, attackRadious, attackPoint.transform.up, attackDistance, LayerMask.GetMask("Player"));
         if (hit.collider != null)
         {
            
 
-            IDamage idamage = hit.collider.GetComponent<IDamage>();
+            IDamageable idamage = hit.collider.GetComponent<IDamageable>();
 
             if (idamage != null)
             {
-                idamage.applyDamage(damageData.amount);
+
+                direction = (hit.transform.position - transform.position).normalized;
+                damageData.direction = direction;
+                idamage.TakeDamage(damageData);
                 
             }
 

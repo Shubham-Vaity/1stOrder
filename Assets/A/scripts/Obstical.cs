@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Obstical : MonoBehaviour, IDamage
+public class Obstical : MonoBehaviour, IDamageable
 {
 
     //this script mostly for obsticals of differnt type but same machanic
-    public PlayerInput RequiredWepon; //setting type of tool/wepon so the player is able to deal damage  , eg: axe for wood , picaxe for stone , if the type maches then only damage goes through
+  //  public PlayerInput RequiredWepon; //setting type of tool/wepon so the player is able to deal damage  , eg: axe for wood , picaxe for stone , if the type maches then only damage goes through
 
     public float MaxHP=10;
     public float HP;
@@ -14,10 +14,10 @@ public class Obstical : MonoBehaviour, IDamage
         HP = MaxHP;
     }
 
-    public void applyDamage(float damage)
+    public void TakeDamage(SDamageData damage)
     {
        
-            takeDamage(damage); 
+            takeDamage(damage.amount); 
         
     }
 
