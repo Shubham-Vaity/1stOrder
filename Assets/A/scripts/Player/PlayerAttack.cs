@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
 
-    private PlayerInput player_Input;
+    [SerializeField] private PlayerInput player_Input;
 
     [SerializeField] private GameObject body;
     [SerializeField] private GameObject attackPoint;
@@ -13,16 +13,11 @@ public class PlayerAttack : MonoBehaviour
     private bool canattack;
 
 
-    public float attackRadious=1;    
-    public float attackDistance = 1;
-    private Vector2 direction;
-
-    public EPlayerWeaponType currentwepon;
+   // [SerializeField] private SDamageData damageData;  
 
 
-
-
-    [SerializeField] private SDamageData damageData;  //I think i am doing this damage data thing very wrong 
+    [SerializeField] private WeaponData currentWeapon;
+    [SerializeField] private WeaponData[] WeaponList;   //just a place holder for inventory 
 
 
 
@@ -42,6 +37,12 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
+        if (!currentWeapon && WeaponList.Length > 0)
+        {
+
+            currentWeapon= WeaponList[0];
+        }
+
     }
 
 
@@ -55,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
 
         canattack = true;
 
-        currentwepon = EPlayerWeaponType.Sword;
+    
 
         
 
@@ -76,8 +77,10 @@ public class PlayerAttack : MonoBehaviour
         {
             attackPoint.SetActive(true);
 
-            StartCoroutine(ExecuteAfterDelay(0.2f));
 
+            
+
+            StartCoroutine(ExecuteAfterDelay(currentWeapon.attackCooldown));
             AttackRaycaast();
 
         }
@@ -102,7 +105,7 @@ public class PlayerAttack : MonoBehaviour
     {
       //  Debug.DrawRay(body.transform.position, body.transform.up, Color.red);
       
-        RaycastHit2D hit = Physics2D.CircleCast(body.transform.position, attackRadious, attackPoint.transform.up, attackDistance, LayerMask.GetMask("Interactable"));//to ignore player itself
+        RaycastHit2D hit = Physics2D.CircleCast(body.transform.position, currentWeapon.attackRadius, attackPoint.transform.up, currentWeapon.attackDistance, LayerMask.GetMask("Interactable"));//to ignore player itself
 
         if (hit.collider != null)
         {
@@ -113,9 +116,11 @@ public class PlayerAttack : MonoBehaviour
 
             if (idamage != null)
             {
-
-                direction = (hit.transform.position - transform.position).normalized;
+                SDamageData damageData;
+                Vector2 direction = (hit.transform.position - transform.position).normalized;
                 damageData.direction = direction;
+                damageData.amount = currentWeapon.damage;
+                damageData.knockbackForce = currentWeapon.Knockback;
 
                 idamage.TakeDamage(damageData);
                 
@@ -130,36 +135,47 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            currentwepon = EPlayerWeaponType.Sword;
-            damageData.amount = 5;
-            damageData.knockbackForce = 2;  
-          
-            
+        
+            getWepon(EPlayerWeaponType.Sword);
 
-            Debug.Log(currentwepon);
+          
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            currentwepon = EPlayerWeaponType.Axe;
-            damageData.amount = 6;
-            damageData.knockbackForce = 1f; 
-          
+            
+            getWepon(EPlayerWeaponType.Axe);
 
 
-            Debug.Log(currentwepon);
+            
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            currentwepon = EPlayerWeaponType.PicAxe;
-            damageData.amount = 3;
-            damageData.knockbackForce = 1.5f;
-          
+            
+            getWepon(EPlayerWeaponType.PicAxe);
 
-
-            Debug.Log(currentwepon);
+            
         }
 
 
     }
+
+
+    void getWepon(EPlayerWeaponType weaponType)
+    {
+
+        for (int i=0; i< WeaponList.Length; i++)
+        {
+            if (WeaponList[i].weponType == weaponType)
+            {
+                currentWeapon = WeaponList[i];
+                return;
+            }
+           
+        }
+
+        Debug.LogWarning($"Weapon {weaponType} was not found.");
+
+    }
+
 
 }

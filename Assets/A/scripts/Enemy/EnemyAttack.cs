@@ -9,17 +9,17 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private GameObject attackPoint;
      private bool attacking;
 
-    public EnemyMovement movement;
+    [SerializeField] private EnemyMovement movement;
 
 
-    public float attackRadious=1;    
-    public float attackDistance=1;
+    [SerializeField] private SDamageData damageData;
+    /*[SerializeField] private float attackRadious = 1;
+    [SerializeField] private float attackDistance = 1;*/
 
     private Vector2 direction;
 
-    [SerializeField] private SDamageData damageData;
 
-
+    [SerializeField] private WeaponData currentWeapon; //will be mostly setting wepon via editor
 
     private void Awake()
     {
@@ -33,21 +33,16 @@ public class EnemyAttack : MonoBehaviour
             
     }
 
-    private void Start()
-    {
-        damageData.amount = 5f;
-        damageData.knockbackForce = 1f;
-    }
 
 
 
     private void OnEnable()         ////is this how it works ??  I tried looking it up 
     {
-        movement.AttackPlayer += startAttackCorutin;
+        movement.AttackRangeReached += startAttackCorutin;
     }
     private void OnDisable()
     {
-        movement.AttackPlayer -= startAttackCorutin;
+        movement.AttackRangeReached -= startAttackCorutin;
     }
 
 
@@ -67,7 +62,7 @@ public class EnemyAttack : MonoBehaviour
 
     void attackPlayer()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, attackRadious, attackPoint.transform.up, attackDistance, LayerMask.GetMask("Player"));
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, currentWeapon.attackRadius , attackPoint.transform.up, currentWeapon.attackDistance, LayerMask.GetMask("Player"));
         if (hit.collider != null)
         {
            
@@ -79,6 +74,8 @@ public class EnemyAttack : MonoBehaviour
 
                 direction = (hit.transform.position - transform.position).normalized;
                 damageData.direction = direction;
+                damageData.amount = currentWeapon.damage;
+                damageData.knockbackForce = currentWeapon.Knockback;
                 idamage.TakeDamage(damageData);
                 
             }

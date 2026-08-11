@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 input;
 
-    public float speed;
+    [SerializeField] private float speed;
     private float Current_speed;
     private float Sprint_speed;
 

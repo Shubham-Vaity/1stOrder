@@ -9,8 +9,9 @@ public struct SDamageData
 
 
 
-    public Vector2 direction; //idk if to use this or not 
+    public Vector2 direction;
 
+    //public float cooldown;
 
 
 }

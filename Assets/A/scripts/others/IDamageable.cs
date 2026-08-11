@@ -3,6 +3,6 @@ using UnityEngine;
 public interface IDamageable
 {
 
-    public void TakeDamage(SDamageData damage);
+    public void TakeDamage(SDamageData wepondata);
 
 }

@@ -10,12 +10,12 @@ public class EnemyMovement : MonoBehaviour
 
 
 
-    public float speed=1;
-    public float StopingDistance=1;
-    
-    public GameObject player;
-    public event Action AttackPlayer;
-    private Rigidbody2D rb;
+    [SerializeField] private float speed=1;
+    [SerializeField] private float StopingDistance=1;
+
+    [SerializeField] private GameObject player;
+    public event Action AttackRangeReached;
+    [SerializeField] private Rigidbody2D rb;
 
 
     public bool isattacking;
@@ -64,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
                 if (!isattacking)
                 {
 
-                    AttackPlayer?.Invoke();    //if not this method how do u recomend me attack player ?? uisng another collider that's not goood..
+                    AttackRangeReached?.Invoke();    //if not this method how do u recomend me attack player ?? uisng another collider that's not goood..
                     Debug.Log("attacking player ");
                 }
 

@@ -268,15 +268,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739b00b7a1a20ea4e8b5f374c7edba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  player_Input: {fileID: 0}
   body: {fileID: 1880469212}
   attackPoint: {fileID: 137017471}
-  attackRadious: 1
-  attackDistance: 1
-  currentwepon: 0
   damageData:
-    amount: 5
-    knockbackForce: 1
+    amount: 0
+    knockbackForce: 0
     direction: {x: 0, y: 0}
+  currentwepon: 0
+  currentWeapon: {fileID: 0}
+  WeaponList:
+  - {fileID: 11400000, guid: c4ffd768c469f524db36fcefb2b586f5, type: 2}
+  - {fileID: 11400000, guid: 2ca4d5672ffeb9844a17de88540246f6, type: 2}
+  - {fileID: 11400000, guid: 8f29c0ccf0bd24f4295327f831dd157e, type: 2}
 --- !u!114 &53141193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerHealth
   MaxHP: 20
+  currentHP: 0
 --- !u!1 &137017471
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +525,6 @@ GameObject:
   - component: {fileID: 171124667}
   - component: {fileID: 171124668}
   - component: {fileID: 171124670}
-  - component: {fileID: 171124669}
   - component: {fileID: 171124671}
   m_Layer: 6
   m_Name: obstical
@@ -603,33 +607,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!50 &171124669
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171124666}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &171124670
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -688,7 +665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
 --- !u!1 &519420028
@@ -923,7 +899,6 @@ GameObject:
   - component: {fileID: 706017367}
   - component: {fileID: 706017366}
   - component: {fileID: 706017365}
-  - component: {fileID: 706017364}
   - component: {fileID: 706017363}
   m_Layer: 6
   m_Name: obstical (1)
@@ -944,36 +919,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
---- !u!50 &706017364
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706017362}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &706017365
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1105,7 +1052,6 @@ GameObject:
   - component: {fileID: 1132221168}
   - component: {fileID: 1132221167}
   - component: {fileID: 1132221166}
-  - component: {fileID: 1132221165}
   - component: {fileID: 1132221164}
   m_Layer: 6
   m_Name: obstical (2)
@@ -1126,36 +1072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5636c1f2b7c25ae4fae3071e26a03469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstical
-  RequiredWepon: {fileID: 0}
   MaxHP: 10
   HP: 0
---- !u!50 &1132221165
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132221163}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &1132221166
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1413,7 +1331,6 @@ GameObject:
   - component: {fileID: 1928497719}
   - component: {fileID: 1928497718}
   - component: {fileID: 1928497717}
-  - component: {fileID: 1928497716}
   - component: {fileID: 1928497720}
   m_Layer: 6
   m_Name: traningDummy
@@ -1422,33 +1339,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &1928497716
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928497714}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &1928497717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1793,6 +1683,7 @@ MonoBehaviour:
   speed: 1
   StopingDistance: 1.5
   player: {fileID: 0}
+  rb: {fileID: 0}
   isattacking: 0
 --- !u!114 &2020011920
 MonoBehaviour:
@@ -1821,12 +1712,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackPoint: {fileID: 0}
   movement: {fileID: 0}
-  attackRadious: 1
-  attackDistance: 1
   damageData:
-    amount: 5
-    knockbackForce: 0.5
+    amount: 0
+    knockbackForce: 0
     direction: {x: 0, y: 0}
+  currentWeapon: {fileID: 11400000, guid: c4ffd768c469f524db36fcefb2b586f5, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
